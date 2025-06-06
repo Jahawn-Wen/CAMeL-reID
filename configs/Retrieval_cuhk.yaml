@@ -1,0 +1,75 @@
+image_root: 'images/CUHK-PEDES/'
+test_file: 'data/finetune/cuhk_test.json'
+val_file: 'data/finetune/cuhk_val.json'
+train_file:  ['data/finetune/cuhk_train.json']
+
+
+## Vision Encoder
+vision_config: 'configs/config_sgB_384.json'
+image_res: 224
+patch_size: 32
+h: 224
+w: 224
+
+
+## Text Encoder
+text_config: 'configs/config_bert.json'
+text_encoder: 'data/bert-base-uncased'
+
+
+## Training
+# batch_size_train: 120
+batch_size_train: 80
+batch_size_test: 150
+batch_size_test_text: 750
+
+max_tokens: 56
+max_words: 56
+
+embed_dim: 256
+temp: 0.07
+k_test: 128
+
+
+## mlm loss
+mlm: True
+mask_prob: 0.25
+max_masks: 10
+skipgram_prb: 0.2
+skipgram_size: 3
+mask_whole_word: True
+
+
+## Other Settings
+optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.01, lr_mult: 2}
+schedular: {sched: step, lr: 1e-4, epochs: 30, num_warmup_steps: 0.1} 
+
+# optimizer: {opt: adamW, lr: 7.5e-5, weight_decay: 0.01, lr_mult: 2}
+# schedular: {sched: cosine, lr: 7.5e-5, epochs: 50, steps_per_epoch: 284, num_warmup_steps: 0.1}
+
+# use_ema: True
+# ema_decay: 0.999
+
+swa: Ture
+swa_start: 20
+swa_lr: 1.5e-4
+swa_freq: 3
+# swa_anneal_epochs: 5
+
+pa100k: False
+icfg_rstp: False
+
+lr_2: True
+load_params: False
+load_pretrained: True
+
+eda: True
+eda_p: 1
+erasing_p: 0.6
+LabelSmooth: 0.1
+
+"meta_lr": 0.01  
+
+# "threshold_high" : 0.7
+# "threshold_low" : 0.3
+# "threshold_swa" : 0.5
