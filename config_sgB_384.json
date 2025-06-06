@@ -1,0 +1,11 @@
+{
+  "ckpt": "data/SG-Former-S.pth",
+  "vision_width": 512,
+  "image_res": 224,
+  "h": 224,
+  "w": 224,
+  "window_size": 8,
+  "embed_dim": [64, 128, 256, 512],
+  "depths": [ 2, 4, 16, 1 ],
+  "num_heads": [ 2, 4, 8, 16 ]
+}
