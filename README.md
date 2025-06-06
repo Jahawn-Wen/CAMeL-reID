@@ -3,7 +3,7 @@
 
 **More details can be found at our paper: [CAMeL: Cross modality Adaptive Meta Learning for Text based Person Retrieval](https://ieeexplore.ieee.org/document/10980229)**
 
-<div align="center"><img src="assets/framework.jpg" width="600"></div>
+<div align="center"><img src="assets/framework.jpg" width="800"></div>
 
 ## News
 * The **CAMeL** is comming soon. Welcome to communicate！
