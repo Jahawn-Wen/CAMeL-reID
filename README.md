@@ -59,7 +59,7 @@ Organize `data` folder as follows:
 |        |-- ...
 |        |-- PA100K_train.json
 |        |-- ...
-|    |-- swin_base_patch4_window7_224_22k.pth
+|    |-- SG-Former-S.pth
 ```
 
 And organize those datasets in `images` folder as follows:
