@@ -1,7 +1,7 @@
-# CAMeL-Cross-modality-Adaptive-Meta-Learning-for-Text-based-Person-Retrieval
+# CAMeL: Cross modality Adaptive Meta Learning for Text based Person Retrieval
 [IEEE Transactions on Information Forensics and Security'25] Pytorch implementation of CAMeL: Cross-modality Adaptive Meta-Learning for Text-based Person Retrieval.
 
-**More details can be found at our paper: [CAMeL: Cross-modality-Adaptive-Meta-Learning-for-Text-based-Person-Retrieval](https://ieeexplore.ieee.org/document/10980229)**
+**More details can be found at our paper: [CAMeL: Cross modality Adaptive Meta Learning for Text based Person Retrieval](https://ieeexplore.ieee.org/document/10980229)**
 
 <div align="center"><img src="assets/framework.jpg" width="600"></div>
 
