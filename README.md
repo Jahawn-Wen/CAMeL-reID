@@ -78,9 +78,6 @@ And organize those datasets in `images` folder as follows:
 |        |-- test/
 |        |-- train/
 |
-|    |-- <pa100k>/
-|        |-- release_data/
-|
 |    |-- <RSTPReid>/
 ```
 
