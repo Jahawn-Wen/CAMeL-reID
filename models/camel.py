@@ -534,9 +534,7 @@
 
 
 #     def calculate_diversity_score(text_features, image_features):
-#         # 计算余弦相似度
 #         cos_sim = F.cosine_similarity(text_features, image_features, dim=1)
-#         # 由于我们想要的是多样性，所以取1减去平均相似度得到多样性评分
 #         diversity_score = 1 - cos_sim.mean()
 #         return diversity_score
 
@@ -879,7 +877,7 @@ class CAMeL(nn.Module):
         self.pa100k_only_img_classifier = config.get('pa100k_only_img_classifier', False)
         self.reid = config.get('reid', False)
 
-        # === 新增：可控图像池化与投影头（默认等价你的 baseline） ===
+        # === 可控图像池化与投影头 ===
         self.img_pool_mode = config.get('img_pool_mode', 'cls')  # 'cls' | 'mean' | 'center3x3' | 'mix'
         self.proj_head     = config.get('proj_head', 'linear')   # 'linear' | 'mlp'
         # 修正初始化：起步≈纯 CLS（sigmoid(-8)≈0.0003）
@@ -937,7 +935,7 @@ class CAMeL(nn.Module):
 
             if use_contrastive_loss:
                 self.embed_dim = config['embed_dim']
-                # 视觉投影：linear / mlp 可选（默认 linear = 你的 baseline）
+                # 视觉投影：linear / mlp 可选（默认 linear = baseline）
                 if self.proj_head == 'mlp':
                     self.vision_proj = nn.Sequential(
                         nn.LayerNorm(self.vision_width),
@@ -996,7 +994,7 @@ class CAMeL(nn.Module):
         else:
             raise ValueError
 
-    # ===== 新增：中心 3x3 池化（当 N 可构成 SxS 网格且 S>=3） =====
+    # ===== 中心 3x3 池化（当 N 可构成 SxS 网格且 S>=3） =====
     @staticmethod
     def _center3x3_pool(tokens: torch.Tensor) -> torch.Tensor:
         # tokens: [B, N, C]
@@ -1019,7 +1017,7 @@ class CAMeL(nn.Module):
         # image_embeds: [B, N, C]
         mode = self.img_pool_mode
         if mode == 'cls':
-            return image_embeds[:, 0, :]  # 历史兼容（注意：这并非真正 CLS，而是左上 patch）
+            return image_embeds[:, 0, :] 
         elif mode == 'mean':
             return image_embeds.mean(dim=1)
         elif mode == 'center3x3':
