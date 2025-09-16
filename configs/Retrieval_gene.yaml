@@ -60,7 +60,7 @@ text_config: 'configs/config_bert.json'
 text_encoder: 'data/bert-base-uncased'
 
 
-## Training
+# ====== Training ======
 batch_size_train: 80
 batch_size_test: 150
 batch_size_test_text: 750
@@ -72,39 +72,76 @@ embed_dim: 256
 temp: 0.07
 k_test: 128
 
+# ====== （关键）锁回 baseline 行为 ======
+img_pool_mode: cls
+proj_head: linear
+img_pool_alpha_init: -8
 
-## mlm loss
-mlm: True
-mask_prob: 0.25
+# ====== MLM Loss ======
+mlm: true
+mask_prob: 0.20
 max_masks: 10
 skipgram_prb: 0.2
 skipgram_size: 3
-mask_whole_word: True
+mask_whole_word: true
 
-
-## Other Settings
+# ====== Optim & Scheduler ======
 optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.01, lr_mult: 2}
-schedular: {sched: linear, lr: 1e-4, epochs: 32, num_warmup_steps: 2600}
+schedular: {sched: step, lr: 1e-4, epochs: 30, num_warmup_steps: 0.1}
+min_lr: 0.000003
 
-pa100k: False
-icfg_rstp: False
-
-lr_2: False
-init_cross: True
-load_params: True
-load_pretrained: False
-
-erasing_p: 0.6
-eda: False
-eda_p: 1
-
-attr: True
-LabelSmooth: 0.4
-t: 0.8
-
-swa: Ture
-swa_start: 20
+# ====== SWA ======
+swa: true
+swa_start: 22
 swa_lr: 2e-4
-swa_freq: 3
+swa_freq: 2
+swa_anneal_epochs: 3
 
-"meta_lr": 0.01 
+# ====== Misc ======
+pa100k: false
+icfg_rstp: false
+lr_2: true
+load_params: false
+load_pretrained: true
+
+eda: true
+eda_p: 1
+erasing_p: 0.6
+LabelSmooth: 0.1
+
+# ====== Meta / Reptile ======
+meta_lr: 0.03
+meta_epochs: 10
+
+# ====== Memory ======
+mem_start_epoch: 12
+mem_warmup_steps: 500
+mem_stride: 2
+
+use_embed_memory: true
+mem_device: cpu
+mem_capacity: 560
+mem_topk: 64
+mem_hard_negatives: true
+mem_alpha: 0.4
+
+mem_use_model_logit_scale: true
+mem_temperature: 0.07
+
+mem_weight_start: 0.0
+mem_weight: 0.15
+mem_weight_ramp_epochs: 6
+
+enable_t2i: false
+mem_weight_t2i: 0.0
+
+ext_backward_on_img_only: true
+mem_keys_backprop_prob: 0.0
+
+mixup3_alpha: 0.6
+
+# ====== 小而可解释的稳定化 Trick ======
+sim_upper: 0.62
+w_switch_epoch: 18
+consistency_weight: 0.03
+grad_clip_norm: 0.6
