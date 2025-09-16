@@ -6,9 +6,9 @@
 <div align="center"><img src="assets/framework.jpg" width="800"></div>
 
 ## News
-* The **CAMeL** is comming. Welcome to communicate！
-* The checkpoints have been released at Baidu Yun https://pan.baidu.com/s/1lp0MyThgf7Shdv3PH2_tig?pwd=tq35 [tq35]！
-* The CAMeL is released.
+* The CAMeL is released. Welcome to communicate！
+* The checkpoints have been released at [Baidu Yun]([http://example.com](https://pan.baidu.com/s/1lp0MyThgf7Shdv3PH2_tig?pwd=tq35 ))[tq35]！
+
 
 
 
