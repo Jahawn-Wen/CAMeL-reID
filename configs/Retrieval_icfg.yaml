@@ -97,7 +97,6 @@ mem_keys_backprop_prob: 0.0
 
 mixup3_alpha: 0.6
 
-# ====== 小而可解释的稳定化 Trick ======
 sim_upper: 0.62
 w_switch_epoch: 18
 consistency_weight: 0.03
