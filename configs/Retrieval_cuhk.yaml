@@ -5,7 +5,7 @@ val_file: data/finetune/cuhk_val.json
 train_file: [data/finetune/cuhk_train.json]
 
 # -------- Vision Encoder--------
-vision_config: configs/sgformer_base.json 
+vision_config: configs/config_sgB_384.json 
 image_res: 384                             
 patch_size: 32       
 h: 224
