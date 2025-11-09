@@ -1,10 +1,8 @@
-# -------- Data --------
-experiment_name: ITR_CUHK_mixmlp     
-dataset: cuhk_pedes                  
-data_root: /home/wjh/data/CUHK-PEDES 
-train_anno: annotations/cuhk_train.json
-val_anno:   annotations/cuhk_val.json
-test_anno:  annotations/cuhk_test.json
+# ====== Data ======
+image_root: images/CUHK-PEDES/
+test_file: data/finetune/cuhk_test.json
+val_file: data/finetune/cuhk_val.json
+train_file: [data/finetune/cuhk_train.json]
 
 # -------- Vision Encoder--------
 vision_config: configs/sgformer_base.json 
