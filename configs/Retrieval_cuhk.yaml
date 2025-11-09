@@ -1,102 +1,99 @@
-# ====== Data ======
-image_root: images/CUHK-PEDES/
-test_file: data/finetune/cuhk_test.json
-val_file: data/finetune/cuhk_val.json
-train_file: [data/finetune/cuhk_train.json]
+# -------- Data --------
+experiment_name: ITR_CUHK_mixmlp     
+dataset: cuhk_pedes                  
+data_root: /home/wjh/data/CUHK-PEDES 
+train_anno: annotations/cuhk_train.json
+val_anno:   annotations/cuhk_val.json
+test_anno:  annotations/cuhk_test.json
 
-# ====== Vision Encoder ======
-vision_config: configs/config_sgB_384.json
-image_res: 224
-patch_size: 32
+# -------- Vision Encoder--------
+vision_config: configs/sgformer_base.json 
+image_res: 384                             
+patch_size: 32       
 h: 224
 w: 224
 
-# ====== Text Encoder ======
-text_config: configs/config_bert.json
-text_encoder: data/bert-base-uncased
+# -------- Text  Encoder--------
+text_config:  configs/bert_base_uncased.json
+text_encoder: bert-base-uncased            
+embed_dim: 512                         
 
-# ====== Training ======
+
+proj_head: mlp               
+img_pool_mode: mix           
+img_pool: mix
+img_pool_alpha_init: -4.0    
+
+
+sim_upper: 0.9   
+neg_topk: 12     
+
+# --------Training --------
+epochs: 30
+batch_size: 70            
 batch_size_train: 70
-batch_size_test: 150
-batch_size_test_text: 750
+train_batch_size: 70
+grad_accum_steps: 2       
+num_workers: 8            
+max_words: 56            
 
-max_tokens: 56
-max_words: 56
+# -------- Optim & Scheduler --------
+base_lr: 1.0e-4           
+min_lr: 1.0e-6            
+warmup_lr: 2.0e-5         
+warmup_epochs: 3
+weight_decay: 0.05
+betas: [0.9, 0.98]        
+LabelSmooth: 0.1         
+amp: true                
 
-embed_dim: 256
+mlm: true                 
+mlm_stop_grad_image: true 
+reid: false               
+eval_interval: 1        
+save_best_by: R1        
+output_dir: outputs/cuhk_mixmlp  
+print_freq: 100          
+seed: 42                 
+
+
+# ---- InfoNCE ----
 temp: 0.07
-k_test: 128
 
-# ====== （关键）锁回 baseline 行为 ======
-img_pool_mode: cls
-proj_head: linear
-img_pool_alpha_init: -8
-
-# ====== MLM Loss ======
-mlm: true
-mask_prob: 0.20
-max_masks: 10
-skipgram_prb: 0.2
-skipgram_size: 3
-mask_whole_word: true
-
-# ====== Optim & Scheduler ======
-optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.01, lr_mult: 2}
-schedular: {sched: step, lr: 1e-4, epochs: 30, num_warmup_steps: 0.1}
-min_lr: 0.000003
-
-# ====== SWA ======
+# ---- SWA----
 swa: true
 swa_start: 22
-swa_lr: 2e-4
+swa_lr: 2.0e-4
 swa_freq: 2
 swa_anneal_epochs: 3
 
-# ====== Misc ======
-pa100k: false
-icfg_rstp: false
-lr_2: true
-load_params: false
-load_pretrained: true
-
-eda: true
-eda_p: 1
-erasing_p: 0.6
-LabelSmooth: 0.1
-
-# ====== Meta / Reptile ======
-meta_lr: 0.03
-meta_epochs: 10
-
-# ====== Memory ======
+# ---- Memory Bank ----
 mem_start_epoch: 12
 mem_warmup_steps: 500
 mem_stride: 2
-
 use_embed_memory: true
-mem_device: cpu
+mem_device: cpu          # or 'cuda'
 mem_capacity: 560
 mem_topk: 64
 mem_hard_negatives: true
 mem_alpha: 0.4
-
 mem_use_model_logit_scale: true
 mem_temperature: 0.07
-
 mem_weight_start: 0.0
 mem_weight: 0.15
 mem_weight_ramp_epochs: 6
-
 enable_t2i: false
 mem_weight_t2i: 0.0
-
 ext_backward_on_img_only: true
 mem_keys_backprop_prob: 0.0
 
+
+eda: true
+eda_p: 1.0
+erasing_p: 0.6
 mixup3_alpha: 0.6
 
 
-sim_upper: 0.62
-w_switch_epoch: 18
-consistency_weight: 0.03
-grad_clip_norm: 0.6
+grad_clip_norm: 0.6          
+consistency_weight: 0.03    
+w_switch_epoch: 18         
