@@ -47,13 +47,7 @@ amp: true
 
 mlm: true                 
 mlm_stop_grad_image: true 
-reid: false               
-eval_interval: 1        
-save_best_by: R1        
-output_dir: outputs/cuhk_mixmlp  
-print_freq: 100          
-seed: 42                 
-
+          
 
 # ---- InfoNCE ----
 temp: 0.07
