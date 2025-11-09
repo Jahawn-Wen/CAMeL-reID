@@ -25,79 +25,75 @@ batch_size_test_text: 750
 max_tokens: 56
 max_words: 56
 
-embed_dim: 256
+embed_dim: 512
 temp: 0.07
 k_test: 128
 
-# ====== （关键）锁回 baseline 行为 ======
-img_pool_mode: cls
-proj_head: linear
-img_pool_alpha_init: -8
+proj_head: mlp               
+img_pool_mode: mix           
+img_pool: mix
+img_pool_alpha_init: -4.0    
 
-# ====== MLM Loss ======
-mlm: true
-mask_prob: 0.20
-max_masks: 10
-skipgram_prb: 0.2
-skipgram_size: 3
-mask_whole_word: true
 
-# ====== Optim & Scheduler ======
-optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.01, lr_mult: 2}
-schedular: {sched: step, lr: 1e-4, epochs: 30, num_warmup_steps: 0.1}
-min_lr: 0.000003
+sim_upper: 0.9   
+neg_topk: 12     
 
-# ====== SWA ======
+# --------Training --------
+epochs: 30
+grad_accum_steps: 2       
+num_workers: 8            
+       
+
+# -------- Optim & Scheduler --------
+base_lr: 1.0e-4           
+min_lr: 1.0e-6            
+warmup_lr: 2.0e-5         
+warmup_epochs: 3
+weight_decay: 0.05
+betas: [0.9, 0.98]        
+LabelSmooth: 0.1         
+amp: true                
+
+mlm: true                 
+mlm_stop_grad_image: true 
+reid: false               
+          
+
+
+# ---- SWA----
 swa: true
 swa_start: 22
-swa_lr: 2e-4
+swa_lr: 2.0e-4
 swa_freq: 2
 swa_anneal_epochs: 3
 
-# ====== Misc ======
-pa100k: false
-icfg_rstp: false
-lr_2: true
-load_params: false
-load_pretrained: true
-
-eda: true
-eda_p: 1
-erasing_p: 0.6
-LabelSmooth: 0.1
-
-# ====== Meta / Reptile ======
-meta_lr: 0.03
-meta_epochs: 10
-
-# ====== Memory ======
+# ---- Memory Bank ----
 mem_start_epoch: 12
 mem_warmup_steps: 500
 mem_stride: 2
-
 use_embed_memory: true
-mem_device: cpu
+mem_device: cpu          # or 'cuda'
 mem_capacity: 560
 mem_topk: 64
 mem_hard_negatives: true
 mem_alpha: 0.4
-
 mem_use_model_logit_scale: true
 mem_temperature: 0.07
-
 mem_weight_start: 0.0
 mem_weight: 0.15
 mem_weight_ramp_epochs: 6
-
 enable_t2i: false
 mem_weight_t2i: 0.0
-
 ext_backward_on_img_only: true
 mem_keys_backprop_prob: 0.0
 
+
+eda: true
+eda_p: 1.0
+erasing_p: 0.6
 mixup3_alpha: 0.6
 
-sim_upper: 0.62
-w_switch_epoch: 18
-consistency_weight: 0.03
-grad_clip_norm: 0.6
+
+grad_clip_norm: 0.6          
+consistency_weight: 0.03    
+w_switch_epoch: 18         
